@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1 class="text-center">Welcome to Cormac's Blog</h1>
+    {% load static %}
+    <img src="{% static 'posts/home.png' %}" class="mx-auto d-block" style="max-height:300px;">
+    <h2>Latest Blog</h2>
+    {% for post in posts.all %}
+        <h3><a href="{% url 'post_details' post.id %}"><h3>{{ post.title }}</h3></a></h3>
+        <p><h4><i class="fa fa-clock-o" aria-hidden="true"></i> {{ post.pub_date_pretty }}</h4></p>
+        <p><img src="{{ post.image.url }}"  class="img-fluid center-block img-thumbnail" style="max-height:300px;"></p>
+        <p>{{ post.summary }}...(click to view more)</p>
+        <hr>
+    {% endfor %}
+{% endblock %}px;
