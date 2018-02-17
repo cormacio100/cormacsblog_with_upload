@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'posts',
-    'sitePages'
+    'sitePages',
+    'django_forms_bootstrap',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,28 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'details': {
+            'format': '%(process)d %(filename)s %(funcName)s %(levelname)s %(lineno)d %(message)s',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+            'formatter': 'details'
+        },
+    },
+    'loggers': {
+        'posts.views': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+    }
+}

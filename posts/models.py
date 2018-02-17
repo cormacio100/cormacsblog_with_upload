@@ -2,14 +2,17 @@
 from __future__ import unicode_literals
 
 from django.db import models
+import django.utils.timezone
+
 
 # Create your models here.
 # title, date, picture, text
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    pub_date = models.DateTimeField()
-    image = models.ImageField(upload_to="images/")       # need to install Pillow to use
+    image = models.ImageField(upload_to="images/", blank=True, null=True)       # need to install Pillow to use
     body = models.TextField()
+    created_date = models.DateTimeField(default=django.utils.timezone.now)
+    published_date = models.DateTimeField(blank=True, null=True)
 
     # make title visible in admin instead of Post Object
     def __unicode__(self):
@@ -18,7 +21,7 @@ class Post(models.Model):
     #   make the pub_date more readable by providing a format
     #   can be called directly from the template
     def pub_date_pretty(self):
-        return self.pub_date.strftime('%b %d %Y')
+        return self.published_date.strftime('%b %d %Y')
 
     def summary(self):
         return self.body[:100]

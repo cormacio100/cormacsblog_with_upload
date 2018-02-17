@@ -9,10 +9,6 @@ h1 a{
     width: auto;
 }
 
-body {
-    font-family: Arial;
-    padding-top: 50px;
-}
 
 footer {
     margin-top: 40px;
@@ -58,7 +54,7 @@ h1, h1 a {
 }
 
 a, a:hover {
-    color: #223344;
+    color: #a3a2a1;
     text-decoration: none;
 }
 

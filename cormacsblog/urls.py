@@ -18,13 +18,21 @@ from django.contrib import admin
 import posts.views
 import sitePages.views
 
+
 #   allow display of images
 from django.conf.urls.static import static  # allow us view images
 from django.conf import settings            # retrieve values from the settings file
+
+###########################################
+#   for reading IMAGES Uploaded by users
+###########################################
+from django.views.static import serve
+from .settings import MEDIA_ROOT
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),   # recommended to change URL from admin/ to sokething else
     url(r'^$', posts.views.index),
     url(r'^posts/',include('posts.urls')),
-    url(r'^about/', sitePages.views.about, name="about")
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # allows display of images
+    url(r'^about/', sitePages.views.about, name="about"),
+    url(r'^media/(?P<path>.*)$',serve, {'document_root':MEDIA_ROOT}),# allows display of images
+]#+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # allows display of images
