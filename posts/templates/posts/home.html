@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
     {% load staticfiles %}
-
-
     <h2>Latest Blog</h2>
     {% for post in posts.all %}
         <h3><a href="{% url 'posts:post_details' post.id %}"><h3>{{ post.title }}</h3></a></h3>
