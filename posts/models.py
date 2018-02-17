@@ -8,7 +8,7 @@ from django.db import models
 class Post(models.Model):
     title = models.CharField(max_length=255)
     pub_date = models.DateTimeField()
-    image = models.ImageField(upload_to="media/")       # need to install Pillow to use
+    image = models.ImageField(upload_to="images/")       # need to install Pillow to use
     body = models.TextField()
 
     # make title visible in admin instead of Post Object
