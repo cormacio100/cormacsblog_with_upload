@@ -1,14 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 class="text-center">Welcome to Cormac's Blog</h1>
-    {% load static %}
-    <img src="{% static 'posts/home.png' %}" class="mx-auto d-block" style="max-height:300px;">
-    <h2>Latest Blog</h2>
+    {% load staticfiles %}
+    <h2>Latest Blogs</h2>
+    <hr>
     {% for post in posts.all %}
-        <h3><a href="{% url 'posts:post_details' post.id %}"><h3>{{ post.title }}</h3></a></h3>
-        <p><h4><i class="fa fa-clock-o" aria-hidden="true"></i> {{ post.pub_date_pretty }}</h4></p>
-        <p><img src="{{ post.image.url }}"  class="img-fluid center-block img-thumbnail" style="max-height:300px;"></p>
-        <p>{{ post.summary }}...(click to view more)</p>
-        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3><a href="{% url 'posts:post_details' post.id %}"><h3>{{ post.title }}</h3></a></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 text-center">
+                        <a class="story-img" href="#">
+                            <!--<img src="http://placehold.it/100" style="width:100px; height:100px; background-color: #12ABB2; color: #ffffff#" class="img-circle">-->
+                            <p><img src="{{ post.image.url }}"  style="width:100px; height:100px; background-color: #12ABB2; color: #ffffff" class="img-circle"></p> <!--class="img-fluid center-block img-thumbnail" style="max-height:300px;"></p>-->
+                        </a>
+                    </div>
+                    <div class="col-md-10 col-sm-9">
+                        <div class="row">
+                            <div class="col-xs-9">
+                                <p>{{ post.content }}</p>
+                                <p><button class="btn btn-default">Read More</button></p>
+                                <p>{{ post.pub_date_pretty }}</p>
+                                <p>{{ post.summary }}...(click to view more)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <hr>
+            </div>
+        </div>
+
     {% endfor %}
 {% endblock %}

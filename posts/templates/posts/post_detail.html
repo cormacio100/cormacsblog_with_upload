@@ -5,7 +5,7 @@
     <p>{{ post.pub_date_pretty }}</p>
     <p><img src="{{ post.image.url }}" class="img-fluid center-block img-thumbnail" style="max-height:150px;"></p>
     <p>{{ post.body }}</p>
-    <p><a href="{% url 'home' %}">Home</a></p>
+    <p><a href="{% url 'posts:home' %}">Home</a></p>
     <div id="disqus_thread"></div>
     <script>
         //  UNIQUELY IDENTIFY COMMENTS TO THIS ENTERTAINER OBJ
