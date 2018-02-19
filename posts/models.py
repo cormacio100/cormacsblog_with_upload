@@ -9,7 +9,7 @@ import django.utils.timezone
 # title, date, picture, text
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="images/", blank=True, null=True)       # need to install Pillow to use
+    image = models.ImageField(upload_to="media/images/", blank=True, null=True)       # need to install Pillow to use
     body = models.TextField()
     created_date = models.DateTimeField(default=django.utils.timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)

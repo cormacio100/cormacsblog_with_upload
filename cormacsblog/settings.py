@@ -133,6 +133,7 @@ USE_TZ = True
     -   boto3
 ########################################################################################"""
 
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATICFILES_DIRS = (
@@ -162,8 +163,18 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 #   Tell the staticfiles app to use S3Boto3 storage when writing the collected static files
 #   (when you run the command 'python manage.py collectstatic')
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+#   New setting for STATICFILES_STORAGE
+#   so that our custom storage class can be configured separately from other storage classes in DJango
+#   Giving our class a location attribute of 'static' will put all our files into paths on S3 starting with 'static'
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+MEDIAFILES_LOCATION = 'media'
+MEDIAFILES_STORAGE = 'custom_storages.MediaStorage'
+
 """##################################
     LOGGING
 ##################################"""
