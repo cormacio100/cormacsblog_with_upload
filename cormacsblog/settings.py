@@ -163,7 +163,7 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 #   Tell the staticfiles app to use S3Boto3 storage when writing the collected static files
 #   (when you run the command 'python manage.py collectstatic')
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 """##################################
     LOGGING
 ##################################"""
