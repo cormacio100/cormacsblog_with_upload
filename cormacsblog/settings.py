@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import env
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$p%$u=2fr-ynt@qid@1wv#zw3co&5n0v3pbqwzj&)svut6ur9q'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'posts',
     'sitePages',
     'django_forms_bootstrap',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -121,6 +123,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+"""########################################################################################
+    THESE STATIC SETTINGS ARE FOR LOCAL STATIC FILES ONLY
+    WITH THE USE OF S3BotoStorage THEY WILL NOT BE USED.
+    INSTEAD IT WILL LOOK FOR SETTINGS STARTING WITH "AWS_"
+    TO KNOW HOW TO WRITE FILES TO THE STORAGE AND HOW TO LINK TO THEM FROM THERE
+    NEED TO INSTALL:
+    -   django-storages
+    -   boto3
+########################################################################################"""
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATICFILES_DIRS = (
@@ -129,6 +141,32 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
+
+
+"""########################################################################################
+    AWS SETTINGS - That will be used by S3BotoStorage instead of the STATIC settings
+########################################################################################"""
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires' : 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+
+AWS_STORAGE_BUCKET_NAME = 'cormacs-blog-upload'
+AWS_REGION_NAME = 'eu-west-1'
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+
+#   Tell django-storages the domain to use to refer to STATIC files
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+#   Tell the staticfiles app to use S3Boto3 storage when writing the collected static files
+#   (when you run the command 'python manage.py collectstatic')
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+"""##################################
+    LOGGING
+##################################"""
 
 LOGGING = {
     'version': 1,
